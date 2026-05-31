@@ -37,7 +37,10 @@ class BeritaResource extends Resource
                     Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true)->maxLength(255),
                     Forms\Components\RichEditor::make('isi')->required()->columnSpanFull(),
                     Forms\Components\FileUpload::make('thumbnail')
-                        ->image()->directory('berita-thumbnails')->maxSize(2048),
+                        ->image()
+                        ->directory('berita-thumbnails')
+                        ->maxSize(2048)
+                        ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension()),
                     Forms\Components\DateTimePicker::make('published_at')->label('Tanggal Publish')->default(now()),
                     Forms\Components\Hidden::make('published_by')->default(auth()->id()),
                 ])->columns(2),

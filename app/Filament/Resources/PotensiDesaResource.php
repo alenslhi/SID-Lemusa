@@ -30,7 +30,10 @@ class PotensiDesaResource extends Resource
             Forms\Components\TextInput::make('nama')->required()->maxLength(255),
             Forms\Components\RichEditor::make('deskripsi')->columnSpanFull(),
             Forms\Components\FileUpload::make('foto')
-                ->image()->directory('potensi-desa')->maxSize(2048),
+                ->image()
+                ->directory('potensi-desa')
+                ->maxSize(2048)
+                ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension()),
         ]);
     }
 

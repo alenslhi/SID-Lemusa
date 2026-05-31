@@ -58,6 +58,23 @@ class PengajuanSuratResource extends Resource
                             ->required()
                             ->searchable()
                             ->preload(),
+                        Forms\Components\Repeater::make('lampiran')
+                            ->relationship('lampiran')
+                            ->schema([
+                                Forms\Components\FileUpload::make('path_file')
+                                    ->label('Pilih Berkas Lampiran')
+                                    ->disk('local')
+                                    ->directory('lampiran-surat')
+                                    ->maxSize(5120)
+                                    ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'])
+                                    ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension())
+                                    ->storeFileNamesIn('nama_file')
+                                    ->storeFilesizesIn('ukuran_file')
+                                    ->required(),
+                            ])
+                            ->columnSpanFull()
+                            ->label('Lampiran Dokumen')
+                            ->grid(2),
                     ])
                     ->columns(2),
 
@@ -73,6 +90,25 @@ class PengajuanSuratResource extends Resource
                             ->relationship('prosesOleh', 'name')
                             ->searchable()
                             ->preload(),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Hasil Surat')
+                    ->relationship('suratHasil')
+                    ->schema([
+                        Forms\Components\TextInput::make('nomor_surat')
+                            ->label('Nomor Surat')
+                            ->required(),
+                        Forms\Components\FileUpload::make('file_pdf')
+                            ->label('Unduh / Unggah Berkas PDF')
+                            ->disk('local')
+                            ->directory('surat-hasil')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->maxSize(5120)
+                            ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension())
+                            ->required(),
+                        Forms\Components\Hidden::make('uploaded_by')
+                            ->default(auth()->id()),
                     ])
                     ->columns(2),
             ]);
@@ -124,6 +160,18 @@ class PengajuanSuratResource extends Resource
                     ->relationship('jenisSurat', 'nama'),
             ])
             ->actions([
+                \Filament\Actions\Action::make('download_surat')
+                    ->label('Unduh Surat')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('success')
+                    ->visible(fn ($record) => $record->suratHasil()->exists())
+                    ->action(fn ($record) => redirect()->route('file.download', ['path' => $record->suratHasil->file_pdf])),
+                \Filament\Actions\Action::make('download_lampiran')
+                    ->label('Unduh Lampiran')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('info')
+                    ->visible(fn ($record) => $record->lampiran()->exists())
+                    ->action(fn ($record) => redirect()->route('file.download', ['path' => $record->lampiran()->first()->path_file])),
                 \Filament\Actions\ViewAction::make(),
                 \Filament\Actions\EditAction::make(),
                 \Filament\Actions\DeleteAction::make(),

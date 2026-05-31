@@ -48,6 +48,21 @@ class PengaduanResource extends Resource
                         ->options(\App\Domain\Pengaduan\Enums\StatusPengaduan::class)
                         ->default(\App\Domain\Pengaduan\Enums\StatusPengaduan::BARU)
                         ->required(),
+                    Forms\Components\Repeater::make('lampiran')
+                        ->relationship('lampiran')
+                        ->schema([
+                            Forms\Components\FileUpload::make('file')
+                                ->label('Pilih Berkas')
+                                ->disk('local')
+                                ->directory('lampiran-pengaduan')
+                                ->maxSize(5120)
+                                ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'])
+                                ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension())
+                                ->required(),
+                        ])
+                        ->columnSpanFull()
+                        ->label('Lampiran Pengaduan')
+                        ->grid(2),
                 ])->columns(2),
         ]);
     }
@@ -77,6 +92,12 @@ class PengaduanResource extends Resource
                     ->relationship('kategoriPengaduan', 'nama'),
             ])
             ->actions([
+                \Filament\Actions\Action::make('download_lampiran')
+                    ->label('Unduh Lampiran')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('success')
+                    ->visible(fn ($record) => $record->lampiran()->exists())
+                    ->action(fn ($record) => redirect()->route('file.download', ['path' => $record->lampiran()->first()->file])),
                 \Filament\Actions\ViewAction::make(),
                 \Filament\Actions\EditAction::make(),
                 \Filament\Actions\DeleteAction::make(),

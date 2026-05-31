@@ -31,6 +31,16 @@ class ActivityLogResource extends Resource
                     ->label('User')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user.roles.name')
+                    ->label('Role')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Super Admin' => 'danger',
+                        'Kepala Desa' => 'warning',
+                        'Operator Desa' => 'info',
+                        'Warga' => 'success',
+                        default => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('aktivitas')
                     ->searchable()
                     ->limit(80),

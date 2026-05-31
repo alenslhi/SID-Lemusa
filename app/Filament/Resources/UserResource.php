@@ -40,6 +40,12 @@ class UserResource extends Resource
                         ->required(fn (string $operation): bool => $operation === 'create')
                         ->dehydrated(fn (?string $state): bool => filled($state))
                         ->maxLength(255)
+                        ->rule(
+                            \Illuminate\Validation\Rules\Password::min(8)
+                                ->letters()
+                                ->mixedCase()
+                                ->numbers()
+                        )
                         ->revealable(),
                     Forms\Components\Select::make('roles')
                         ->label('Role')

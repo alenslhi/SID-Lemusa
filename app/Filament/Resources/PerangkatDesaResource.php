@@ -26,7 +26,10 @@ class PerangkatDesaResource extends Resource
             Forms\Components\TextInput::make('nama')->required()->maxLength(150),
             Forms\Components\TextInput::make('jabatan')->required()->maxLength(150),
             Forms\Components\FileUpload::make('foto')
-                ->image()->directory('perangkat-desa')->maxSize(2048)
+                ->image()
+                ->directory('perangkat-desa')
+                ->maxSize(2048)
+                ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension())
                 ->imageResizeMode('cover')
                 ->imageCropAspectRatio('1:1')
                 ->imageResizeTargetWidth('300')

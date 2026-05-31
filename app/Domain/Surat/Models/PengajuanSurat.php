@@ -9,6 +9,30 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PengajuanSurat extends Model
 {
+    protected static function booted(): void
+    {
+        static::created(function ($model) {
+            \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                "Membuat pengajuan surat: {$model->kode_pengajuan}"
+            );
+        });
+
+        static::updated(function ($model) {
+            if ($model->isDirty('status_surat_id')) {
+                $statusNama = $model->statusSurat?->nama ?? 'Unknown';
+                \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                    "Mengubah status surat {$model->kode_pengajuan} menjadi {$statusNama}"
+                );
+            }
+        });
+
+        static::deleted(function ($model) {
+            \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                "Menghapus pengajuan surat: {$model->kode_pengajuan}"
+            );
+        });
+    }
+
     protected $table = 'pengajuan_surat';
 
     protected $fillable = [

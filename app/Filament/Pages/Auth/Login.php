@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages\Auth;
 
-use Filament\Pages\Auth\Login as BasePage;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use Filament\Auth\Pages\Login as BasePage;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 use App\Domain\User\Models\User;
@@ -53,21 +53,23 @@ class Login extends BasePage
         try {
             $response = parent::authenticate();
             
+            $user = auth()->user();
+            if ($user && !$user->is_active) {
+                auth()->logout();
+                
+                ActivityLogger::log(
+                    aktivitas: "Gagal login (Akun dinonaktifkan): {$email}",
+                    userId: null
+                );
+                
+                throw ValidationException::withMessages([
+                    'email' => 'Akun Anda dinonaktifkan. Silakan hubungi administrator.',
+                ]);
+            }
+            
             // Clear attempts on success
             RateLimiter::clear($minuteKey);
             RateLimiter::clear($lockoutKey);
-
-            // Log successful login
-            ActivityLogger::log(
-                aktivitas: "Berhasil login ke sistem",
-                userId: auth()->id()
-            );
-
-            // Set last login timestamp
-            $user = auth()->user();
-            if ($user instanceof User) {
-                $user->update(['last_login_at' => now()]);
-            }
 
             return $response;
 
@@ -84,5 +86,10 @@ class Login extends BasePage
 
             throw $e;
         }
+    }
+
+    protected function getRememberFormComponent(): \Filament\Schemas\Components\Component
+    {
+        return \Filament\Forms\Components\Hidden::make('remember')->default(false);
     }
 }

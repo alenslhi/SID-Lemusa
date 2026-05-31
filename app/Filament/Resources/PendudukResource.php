@@ -119,6 +119,7 @@ class PendudukResource extends Resource
                             ->image()
                             ->directory('penduduk-foto')
                             ->maxSize(2048)
+                            ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension())
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('1:1')
                             ->imageResizeTargetWidth('300')

@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Penduduk extends Model
 {
+    protected static function booted(): void
+    {
+        static::deleted(function ($model) {
+            \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                "Menghapus data penduduk: {$model->nama_lengkap}"
+            );
+        });
+    }
+
     protected $table = 'penduduk';
 
     protected $fillable = [

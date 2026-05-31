@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SuratHasil extends Model
 {
+    protected static function booted(): void
+    {
+        static::created(function ($model) {
+            $kode = $model->pengajuanSurat?->kode_pengajuan ?? 'Unknown';
+            \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                "Mengunggah surat hasil untuk pengajuan: {$kode} (Nomor: {$model->nomor_surat})"
+            );
+        });
+    }
+
     public $timestamps = false;
 
     protected $table = 'surat_hasil';

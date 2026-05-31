@@ -31,6 +31,7 @@ class GaleriResource extends Resource
                 ->label('File')
                 ->directory('galeri')
                 ->maxSize(10240)
+                ->getUploadedFileNameUsing(fn ($file) => \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension())
                 ->required(),
         ]);
     }

@@ -8,6 +8,30 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pengaduan extends Model
 {
+    protected static function booted(): void
+    {
+        static::created(function ($model) {
+            \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                "Membuat pengaduan: {$model->judul}"
+            );
+        });
+
+        static::updated(function ($model) {
+            if ($model->isDirty('status')) {
+                $statusLabel = $model->status->value ?? 'Unknown';
+                \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                    "Mengubah status pengaduan '{$model->judul}' menjadi {$statusLabel}"
+                );
+            }
+        });
+
+        static::deleted(function ($model) {
+            \App\Domain\ActivityLog\Services\ActivityLogger::log(
+                "Menghapus pengaduan: {$model->judul}"
+            );
+        });
+    }
+
     protected $table = 'pengaduan';
 
     protected $fillable = [
