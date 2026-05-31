@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PendidikanResource\Pages;
-use App\Models\Pendidikan;
+use App\Domain\Penduduk\Models\Pendidikan;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

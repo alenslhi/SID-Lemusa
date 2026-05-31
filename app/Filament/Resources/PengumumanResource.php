@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PengumumanResource\Pages;
-use App\Models\Pengumuman;
+use App\Domain\Pengumuman\Models\Pengumuman;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

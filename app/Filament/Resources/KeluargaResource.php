@@ -3,8 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\KeluargaResource\Pages;
-use App\Models\Keluarga;
-use App\Models\Dusun;
+use App\Domain\Keluarga\Models\Keluarga;
+use App\Domain\Dusun\Models\Dusun;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

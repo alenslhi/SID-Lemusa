@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PotensiDesaResource\Pages;
-use App\Models\PotensiDesa;
+use App\Domain\PotensiDesa\Models\PotensiDesa;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AgendaResource\Pages;
-use App\Models\Agenda;
+use App\Domain\Agenda\Models\Agenda;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

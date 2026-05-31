@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BeritaResource\Pages;
-use App\Models\Berita;
+use App\Domain\Berita\Models\Berita;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

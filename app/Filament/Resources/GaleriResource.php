@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GaleriResource\Pages;
-use App\Models\Galeri;
+use App\Domain\Galeri\Models\Galeri;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
@@ -24,7 +24,7 @@ class GaleriResource extends Resource
     {
         return $form->schema([
             Forms\Components\Select::make('tipe')
-                ->options(['foto' => 'Foto', 'video' => 'Video'])
+                ->options(\App\Domain\Galeri\Enums\TipeGaleri::class)
                 ->required(),
             Forms\Components\TextInput::make('judul')->required()->maxLength(255),
             Forms\Components\FileUpload::make('file_url')
@@ -40,11 +40,7 @@ class GaleriResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('tipe')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'foto' => 'success',
-                        'video' => 'info',
-                    }),
+                    ->badge(),
                 Tables\Columns\TextColumn::make('judul')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y')->sortable(),
             ])

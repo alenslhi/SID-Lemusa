@@ -2,19 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\Dusun;
-use App\Models\Keluarga;
-use App\Models\Penduduk;
-use App\Models\Pengaduan;
-use App\Models\PengajuanSurat;
-use App\Models\PotensiDesa;
-use App\Models\KategoriPotensi;
-use App\Models\KategoriPengaduan;
-use App\Models\Berita;
-use App\Models\Pengumuman;
-use App\Models\Agenda;
-use App\Models\Galeri;
-use App\Models\User;
+use App\Domain\Dusun\Models\Dusun;
+use App\Domain\Keluarga\Models\Keluarga;
+use App\Domain\Penduduk\Models\Penduduk;
+use App\Domain\Pengaduan\Models\Pengaduan;
+use App\Domain\Surat\Models\PengajuanSurat;
+use App\Domain\PotensiDesa\Models\PotensiDesa;
+use App\Domain\PotensiDesa\Models\KategoriPotensi;
+use App\Domain\Pengaduan\Models\KategoriPengaduan;
+use App\Domain\Berita\Models\Berita;
+use App\Domain\Pengumuman\Models\Pengumuman;
+use App\Domain\Agenda\Models\Agenda;
+use App\Domain\Galeri\Models\Galeri;
+use App\Domain\User\Models\User;
 use Illuminate\Database\Seeder;
 
 class DemoDataSeeder extends Seeder

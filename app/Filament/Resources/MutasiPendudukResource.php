@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MutasiPendudukResource\Pages;
-use App\Models\MutasiPenduduk;
+use App\Domain\MutasiPenduduk\Models\MutasiPenduduk;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
@@ -37,12 +37,7 @@ class MutasiPendudukResource extends Resource
                     ->searchable()
                     ->preload(),
                 Forms\Components\Select::make('jenis_mutasi')
-                    ->options([
-                        'lahir' => 'Lahir',
-                        'meninggal' => 'Meninggal',
-                        'pindah_masuk' => 'Pindah Masuk',
-                        'pindah_keluar' => 'Pindah Keluar',
-                    ])
+                    ->options(\App\Domain\MutasiPenduduk\Enums\JenisMutasi::class)
                     ->required(),
                 Forms\Components\DatePicker::make('tanggal_mutasi')
                     ->required()
@@ -64,19 +59,7 @@ class MutasiPendudukResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('jenis_mutasi')
                     ->label('Jenis Mutasi')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'lahir' => 'success',
-                        'meninggal' => 'danger',
-                        'pindah_masuk' => 'info',
-                        'pindah_keluar' => 'warning',
-                    })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'lahir' => 'Lahir',
-                        'meninggal' => 'Meninggal',
-                        'pindah_masuk' => 'Pindah Masuk',
-                        'pindah_keluar' => 'Pindah Keluar',
-                    }),
+                    ->badge(),
                 Tables\Columns\TextColumn::make('tanggal_mutasi')
                     ->date('d M Y')
                     ->sortable(),
@@ -91,12 +74,7 @@ class MutasiPendudukResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('jenis_mutasi')
-                    ->options([
-                        'lahir' => 'Lahir',
-                        'meninggal' => 'Meninggal',
-                        'pindah_masuk' => 'Pindah Masuk',
-                        'pindah_keluar' => 'Pindah Keluar',
-                    ]),
+                    ->options(\App\Domain\MutasiPenduduk\Enums\JenisMutasi::class),
             ])
             ->actions([
                 \Filament\Actions\ViewAction::make(),

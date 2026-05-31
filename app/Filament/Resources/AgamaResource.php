@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AgamaResource\Pages;
-use App\Models\Agama;
+use App\Domain\Penduduk\Models\Agama;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

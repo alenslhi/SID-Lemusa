@@ -1,6 +1,6 @@
 # Sistem Informasi dan Pelayanan Desa (SID-Lemusa)
 
-Sistem Informasi dan Pelayanan Desa (SID-Lemusa) adalah platform administrasi desa berbasis web yang dibangun untuk memfasilitasi pengelolaan data kependudukan, pengajuan surat menyurat, pelaporan aduan masyarakat, serta publikasi informasi dan potensi desa Lemusa.
+Sistem Informasi dan Pelayanan Desa (SID-Lemusa) adalah platform administrasi desa berbasis web yang dibangun dengan pendekatan Clean Architecture Lite untuk memfasilitasi pengelolaan data kependudukan, pengajuan surat menyurat, pelaporan aduan masyarakat, serta publikasi informasi dan potensi desa Lemusa.
 
 ---
 
@@ -10,52 +10,37 @@ Aplikasi ini dibangun menggunakan tumpukan teknologi modern berikut:
 
 - Framework Backend: Laravel 12
 - Panel Administrasi: Filament 5.6
-- Otorisasi & Hak Akses: Spatie Laravel Permission 6.25
-- Framework Frontend & Interaktivitas: Livewire, Alpine.js, Tailwind CSS
+- Otorisasi dan Hak Akses: Spatie Laravel Permission 6.25
+- Framework Frontend dan Interaktivitas: Livewire, Alpine.js, Tailwind CSS
 - Database: MySQL / MariaDB
 
 ---
 
-## Fitur Utama
+## Desain Arsitektur (Clean Architecture Lite)
 
-### 1. Manajemen Kependudukan
-- Pengelolaan data Dusun, Rukun Tetangga (RT), dan Rukun Warga (RW).
-- Pengelolaan Kartu Keluarga (KK) dan pencatatan biodata lengkap Penduduk.
-- Pencatatan Mutasi Penduduk (kelahiran, kematian, kepindahan, dll).
+Sistem ini dirancang menggunakan pendekatan Clean Architecture Lite yang memisahkan aplikasi menjadi beberapa lapisan terstruktur untuk kemudahan pemeliharaan dan pengujian:
 
-### 2. Pelayanan Persuratan (Digitalisasi Surat)
-- Permohonan surat secara mandiri oleh warga melalui sistem.
-- Pemrosesan status permohonan surat secara real-time oleh operator desa.
-- Pengaturan template jenis surat secara dinamis.
+1. **Presentation Layer (Lapisan Presentasi)**
+   - Lokasi: `app/Filament/`
+   - Tanggung jawab: Mengelola antarmuka pengguna admin, formulir input, tabel data, widget statistik, dan kontrol tampilan Filament. Lapisan ini didekopel sepenuhnya dari logika bisnis database langsung.
 
-### 3. Pengaduan Masyarakat
-- Warga dapat melaporkan keluhan atau aduan terkait infrastruktur, kebersihan, keamanan, pelayanan desa, atau kategori lainnya.
-- Pelacakan status penyelesaian pengaduan oleh operator desa.
+2. **Application Layer (Lapisan Aplikasi)**
+   - Lokasi: `app/Domain/*/Actions/`, `app/Domain/*/DTOs/`, `app/Domain/*/Services/`
+   - Tanggung jawab: Mengatur aliran logika aplikasi, mendefinisikan Data Transfer Object (DTO) untuk validasi data masukan, serta menjalankan prosedur aksi bisnis (Actions) yang bersifat modular dan independen dari framework UI.
 
-### 4. Publikasi Informasi & Potensi Desa
-- Pengelolaan artikel berita desa, pengumuman resmi, agenda kegiatan desa, dan dokumentasi galeri kegiatan.
-- Publikasi produk unggulan atau potensi desa (UMKM, pertanian, perikanan, dll).
+3. **Domain Layer (Lapisan Domain)**
+   - Lokasi: `app/Domain/*/Models/`, `app/Domain/*/Policies/`, `app/Domain/*/Enums/`
+   - Tanggung jawab: Menyimpan aturan bisnis inti, entitas basis data (Eloquent Models), kebijakan otorisasi hak akses (Policies), dan enumerasi tipe data terstruktur (Backed Enums).
 
-### 5. Dasbor & Statistik Visual
-- Grafik demografi penduduk berdasarkan Jenis Kelamin dan Agama.
-- Statistik ringkasan jumlah total Penduduk, Kartu Keluarga, Pengajuan Surat, dan Pengaduan aktif.
-
----
-
-## Keamanan & Kontrol Hak Akses (RBAC)
-
-Aplikasi ini menerapkan Role-Based Access Control yang ketat menggunakan Laravel Policy:
-
-- **Super Admin**: Memiliki kontrol penuh atas seluruh sistem, konfigurasi, data master, serta manajemen akun pengguna dan peran (roles).
-- **Kepala Desa**: Memiliki hak akses baca (read-only) untuk memantau data kependudukan, surat menyurat, aduan masyarakat, log aktivitas, dan laporan statistik. Diizinkan melakukan pembaruan profil desa.
-- **Operator Desa**: Memiliki hak akses penuh untuk mengelola data kependudukan, menerbitkan informasi/berita, serta memproses pengajuan surat dan pengaduan masyarakat.
-- **Warga**: Memiliki hak akses terbatas. Hanya diizinkan mengakses modul pengajuan surat dan aduan masyarakat, serta hanya dapat melihat data yang dibuat oleh akun mereka sendiri.
+4. **Infrastructure Layer (Lapisan Infrastruktur)**
+   - Lokasi: `database/migrations/`, konfigurasi sistem, dan integrasi pihak ketiga.
+   - Tanggung jawab: Menyediakan detail teknis penyimpanan basis data, migrasi skema tabel, dan implementasi layanan eksternal.
 
 ---
 
 ## Kredensial Uji Coba
 
-Gunakan akun berikut untuk masuk ke panel administrasi (semua akun menggunakan sandi: `password`):
+Gunakan akun berikut untuk masuk ke panel administrasi (semua akun menggunakan sandi: password):
 
 | Peran (Role) | Alamat Surel (Email) |
 | :--- | :--- |
@@ -66,12 +51,12 @@ Gunakan akun berikut untuk masuk ke panel administrasi (semua akun menggunakan s
 
 ---
 
-## Langkah Instalasi & Penggunaan Lokal
+## Langkah Instalasi dan Penggunaan Lokal
 
 ### Prasyarat
 - PHP 8.2 atau versi terbaru
 - Composer
-- Node.js & NPM
+- Node.js dan NPM
 - MySQL / MariaDB
 
 ### Panduan Langkah demi Langkah
@@ -98,7 +83,7 @@ Gunakan akun berikut untuk masuk ke panel administrasi (semua akun menggunakan s
    php artisan key:generate
    ```
 
-5. **Jalankan Migrasi & Pengisian Data Awal (Seeding)**
+5. **Jalankan Migrasi dan Pengisian Data Awal (Seeding)**
    Jalankan perintah berikut untuk membuat struktur database beserta data master, akun uji coba, dan data simulasi demo:
    ```bash
    php artisan migrate:fresh --seed

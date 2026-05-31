@@ -2,8 +2,8 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Penduduk;
-use App\Models\Agama;
+use App\Domain\Penduduk\Models\Penduduk;
+use App\Domain\Penduduk\Models\Agama;
 use Filament\Widgets\ChartWidget;
 
 class PendudukByAgamaChart extends ChartWidget

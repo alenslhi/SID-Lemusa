@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\Agama;
-use App\Models\JenisSurat;
-use App\Models\KategoriPengaduan;
-use App\Models\KategoriPotensi;
-use App\Models\Pekerjaan;
-use App\Models\Pendidikan;
-use App\Models\StatusPerkawinan;
-use App\Models\StatusSurat;
+use App\Domain\Penduduk\Models\Agama;
+use App\Domain\Surat\Models\JenisSurat;
+use App\Domain\Pengaduan\Models\KategoriPengaduan;
+use App\Domain\PotensiDesa\Models\KategoriPotensi;
+use App\Domain\Penduduk\Models\Pekerjaan;
+use App\Domain\Penduduk\Models\Pendidikan;
+use App\Domain\Penduduk\Models\StatusPerkawinan;
+use App\Domain\Surat\Models\StatusSurat;
 use Illuminate\Database\Seeder;
 
 class MasterDataSeeder extends Seeder

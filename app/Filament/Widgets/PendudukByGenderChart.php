@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Penduduk;
+use App\Domain\Penduduk\Models\Penduduk;
 use Filament\Widgets\ChartWidget;
 
 class PendudukByGenderChart extends ChartWidget

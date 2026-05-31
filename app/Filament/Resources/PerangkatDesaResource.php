@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PerangkatDesaResource\Pages;
-use App\Models\PerangkatDesa;
+use App\Domain\ProfilDesa\Models\PerangkatDesa;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

@@ -2,10 +2,10 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Keluarga;
-use App\Models\Penduduk;
-use App\Models\PengajuanSurat;
-use App\Models\Pengaduan;
+use App\Domain\Keluarga\Models\Keluarga;
+use App\Domain\Penduduk\Models\Penduduk;
+use App\Domain\Surat\Models\PengajuanSurat;
+use App\Domain\Pengaduan\Models\Pengaduan;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 

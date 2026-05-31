@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PendudukResource\Pages;
-use App\Models\Penduduk;
+use App\Domain\Penduduk\Models\Penduduk;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
@@ -50,10 +50,7 @@ class PendudukResource extends Resource
                                     ->maxDate(now()),
                             ]),
                         Forms\Components\Select::make('jenis_kelamin')
-                            ->options([
-                                'L' => 'Laki-laki',
-                                'P' => 'Perempuan',
-                            ])
+                            ->options(\App\Domain\Penduduk\Enums\JenisKelamin::class)
                             ->required(),
                         Forms\Components\Select::make('agama_id')
                             ->label('Agama')
@@ -115,12 +112,8 @@ class PendudukResource extends Resource
                             ->maxLength(255),
                         Forms\Components\Select::make('status_penduduk')
                             ->label('Status Penduduk')
-                            ->options([
-                                'aktif' => 'Aktif',
-                                'meninggal' => 'Meninggal',
-                                'pindah_keluar' => 'Pindah Keluar',
-                            ])
-                            ->default('aktif')
+                            ->options(\App\Domain\Penduduk\Enums\StatusPenduduk::class)
+                            ->default(\App\Domain\Penduduk\Enums\StatusPenduduk::AKTIF)
                             ->required(),
                         Forms\Components\FileUpload::make('foto')
                             ->image()
@@ -153,15 +146,7 @@ class PendudukResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('jenis_kelamin')
                     ->label('JK')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'L' => 'info',
-                        'P' => 'danger',
-                    })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'L' => 'Laki-laki',
-                        'P' => 'Perempuan',
-                    }),
+                    ->badge(),
                 Tables\Columns\TextColumn::make('keluarga.nomor_kk')
                     ->label('No. KK')
                     ->searchable()
@@ -174,28 +159,16 @@ class PendudukResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('status_penduduk')
                     ->label('Status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'aktif' => 'success',
-                        'meninggal' => 'danger',
-                        'pindah_keluar' => 'warning',
-                    }),
+                    ->badge(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('jenis_kelamin')
-                    ->options([
-                        'L' => 'Laki-laki',
-                        'P' => 'Perempuan',
-                    ]),
+                    ->options(\App\Domain\Penduduk\Enums\JenisKelamin::class),
                 Tables\Filters\SelectFilter::make('agama_id')
                     ->label('Agama')
                     ->relationship('agama', 'nama'),
                 Tables\Filters\SelectFilter::make('status_penduduk')
-                    ->options([
-                        'aktif' => 'Aktif',
-                        'meninggal' => 'Meninggal',
-                        'pindah_keluar' => 'Pindah Keluar',
-                    ]),
+                    ->options(\App\Domain\Penduduk\Enums\StatusPenduduk::class),
                 Tables\Filters\SelectFilter::make('keluarga_id')
                     ->label('Kartu Keluarga')
                     ->relationship('keluarga', 'nomor_kk')

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DusunResource\Pages;
-use App\Models\Dusun;
+use App\Domain\Dusun\Models\Dusun;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

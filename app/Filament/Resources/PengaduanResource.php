@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PengaduanResource\Pages;
-use App\Models\Pengaduan;
+use App\Domain\Pengaduan\Models\Pengaduan;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
@@ -45,13 +45,8 @@ class PengaduanResource extends Resource
                         ->required()
                         ->columnSpanFull(),
                     Forms\Components\Select::make('status')
-                        ->options([
-                            'baru' => 'Baru',
-                            'diproses' => 'Diproses',
-                            'selesai' => 'Selesai',
-                            'ditolak' => 'Ditolak',
-                        ])
-                        ->default('baru')
+                        ->options(\App\Domain\Pengaduan\Enums\StatusPengaduan::class)
+                        ->default(\App\Domain\Pengaduan\Enums\StatusPengaduan::BARU)
                         ->required(),
                 ])->columns(2),
         ]);
@@ -67,14 +62,7 @@ class PengaduanResource extends Resource
                     ->label('Kategori')->sortable(),
                 Tables\Columns\TextColumn::make('judul')->searchable()->limit(40),
                 Tables\Columns\TextColumn::make('status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'baru' => 'warning',
-                        'diproses' => 'info',
-                        'selesai' => 'success',
-                        'ditolak' => 'danger',
-                    })
-                    ->formatStateUsing(fn (string $state): string => ucfirst($state)),
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime('d M Y H:i')
@@ -83,12 +71,7 @@ class PengaduanResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
-                    ->options([
-                        'baru' => 'Baru',
-                        'diproses' => 'Diproses',
-                        'selesai' => 'Selesai',
-                        'ditolak' => 'Ditolak',
-                    ]),
+                    ->options(\App\Domain\Pengaduan\Enums\StatusPengaduan::class),
                 Tables\Filters\SelectFilter::make('kategori_pengaduan_id')
                     ->label('Kategori')
                     ->relationship('kategoriPengaduan', 'nama'),

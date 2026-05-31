@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\JenisSuratResource\Pages;
-use App\Models\JenisSurat;
+use App\Domain\Surat\Models\JenisSurat;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;

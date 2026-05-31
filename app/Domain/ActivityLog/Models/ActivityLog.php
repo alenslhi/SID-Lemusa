@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Domain\ActivityLog\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class ActivityLog extends Model
+{
+    public $timestamps = false;
+
+    protected $table = 'activity_logs';
+
+    protected $fillable = [
+        'user_id',
+        'aktivitas',
+        'ip_address',
+        'user_agent',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+        ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(\App\Domain\User\Models\User::class);
+    }
+}

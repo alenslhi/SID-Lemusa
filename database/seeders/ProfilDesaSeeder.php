@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ProfilDesa;
+use App\Domain\ProfilDesa\Models\ProfilDesa;
 use Illuminate\Database\Seeder;
 
 class ProfilDesaSeeder extends Seeder

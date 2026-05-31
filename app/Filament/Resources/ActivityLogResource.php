@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ActivityLogResource\Pages;
-use App\Models\ActivityLog;
+use App\Domain\ActivityLog\Models\ActivityLog;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;

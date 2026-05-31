@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\StatusPerkawinanResource\Pages;
-use App\Models\StatusPerkawinan;
+use App\Domain\Penduduk\Models\StatusPerkawinan;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
