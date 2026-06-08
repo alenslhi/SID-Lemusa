@@ -22,6 +22,7 @@ class Penduduk extends Model
     protected $fillable = [
         'user_id',
         'keluarga_id',
+        'dusun_id',
         'nik',
         'nama_lengkap',
         'tempat_lahir',
@@ -31,6 +32,13 @@ class Penduduk extends Model
         'pendidikan_id',
         'pekerjaan_id',
         'status_perkawinan_id',
+        'golongan_darah',
+        'status_hubungan_dalam_keluarga',
+        'kewarganegaraan',
+        'no_paspor',
+        'no_kitap',
+        'nama_ayah',
+        'nama_ibu',
         'no_hp',
         'email',
         'foto',
@@ -56,6 +64,11 @@ class Penduduk extends Model
     public function keluarga(): BelongsTo
     {
         return $this->belongsTo(\App\Domain\Keluarga\Models\Keluarga::class);
+    }
+
+    public function dusun(): BelongsTo
+    {
+        return $this->belongsTo(\App\Domain\Dusun\Models\Dusun::class);
     }
 
     public function agama(): BelongsTo

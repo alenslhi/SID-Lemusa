@@ -2,10 +2,10 @@
 
 namespace App\Domain\Penduduk\Enums;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasLabel;
 
-enum StatusPenduduk: string implements HasLabel, HasColor
+
+
+enum StatusPenduduk: string
 {
     case AKTIF = 'aktif';
     case MENINGGAL = 'meninggal';

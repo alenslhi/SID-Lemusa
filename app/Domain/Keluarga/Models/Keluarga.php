@@ -12,11 +12,17 @@ class Keluarga extends Model
 
     protected $fillable = [
         'nomor_kk',
+        'kepala_keluarga_id',
         'dusun_id',
         'alamat',
         'rt',
         'rw',
     ];
+
+    public function kepalaKeluarga(): BelongsTo
+    {
+        return $this->belongsTo(\App\Domain\Penduduk\Models\Penduduk::class, 'kepala_keluarga_id');
+    }
 
     public function dusun(): BelongsTo
     {

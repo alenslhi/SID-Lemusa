@@ -63,6 +63,10 @@ class DemoDataSeeder extends Seeder
                 'pekerjaan_id' => 3, // Wiraswasta
                 'status_perkawinan_id' => 2, // Kawin
                 'keluarga_id' => $kk1->id,
+                'dusun_id' => $kk1->dusun_id,
+                'status_hubungan_dalam_keluarga' => 'Kepala Keluarga',
+                'nama_ayah' => 'Ayah Ahmad',
+                'nama_ibu' => 'Ibu Ahmad',
                 'no_hp' => '081234567890',
                 'email' => 'warga@sid-lemusa.id',
                 'status_penduduk' => 'aktif',
@@ -82,6 +86,10 @@ class DemoDataSeeder extends Seeder
                 'pekerjaan_id' => 7, // IRT
                 'status_perkawinan_id' => 2,
                 'keluarga_id' => $kk1->id,
+                'dusun_id' => $kk1->dusun_id,
+                'status_hubungan_dalam_keluarga' => 'Istri',
+                'nama_ayah' => 'Ayah Siti',
+                'nama_ibu' => 'Ibu Siti',
                 'no_hp' => '081234567891',
                 'email' => 'siti@sid-lemusa.id',
                 'status_penduduk' => 'aktif',
@@ -100,11 +108,19 @@ class DemoDataSeeder extends Seeder
                 'pekerjaan_id' => 1, // Petani
                 'status_perkawinan_id' => 2,
                 'keluarga_id' => $kk2->id,
+                'dusun_id' => $kk2->dusun_id,
+                'status_hubungan_dalam_keluarga' => 'Kepala Keluarga',
+                'nama_ayah' => 'Ayah Budi',
+                'nama_ibu' => 'Ibu Budi',
                 'no_hp' => '081234567892',
                 'email' => 'budi@sid-lemusa.id',
                 'status_penduduk' => 'aktif',
             ]
         );
+
+        // Update kepala_keluarga_id on keluarga records
+        $kk1->update(['kepala_keluarga_id' => $p1->id]);
+        $kk2->update(['kepala_keluarga_id' => $p3->id]);
 
         // ─── Pengaduan ─────────────────────────────────────────
         Pengaduan::firstOrCreate(

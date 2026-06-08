@@ -16,7 +16,11 @@ class SecureHeaders
             $response->header('X-Frame-Options', 'SAMEORIGIN');
             $response->header('X-Content-Type-Options', 'nosniff');
             $response->header('Referrer-Policy', 'strict-origin-when-cross-origin');
-            $response->header('Content-Security-Policy', "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; img-src 'self' data: https:; font-src 'self' data: https:; frame-ancestors 'self'");
+            $csp = "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; img-src 'self' data: https:; font-src 'self' data: https:; frame-ancestors 'self'";
+            if (app()->environment('local')) {
+                $csp = "default-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:5173 http://127.0.0.1:5173 http://[::1]:5173 ws://localhost:5173 ws://127.0.0.1:5173 ws://[::1]:5173 https:; img-src 'self' data: http://localhost:5173 http://127.0.0.1:5173 http://[::1]:5173 https:; font-src 'self' data: https:; frame-ancestors 'self'";
+            }
+            $response->header('Content-Security-Policy', $csp);
         }
 
         return $response;

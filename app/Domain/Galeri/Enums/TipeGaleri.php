@@ -2,10 +2,10 @@
 
 namespace App\Domain\Galeri\Enums;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasLabel;
 
-enum TipeGaleri: string implements HasLabel, HasColor
+
+
+enum TipeGaleri: string
 {
     case FOTO = 'foto';
     case VIDEO = 'video';

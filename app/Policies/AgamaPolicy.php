@@ -1,0 +1,2 @@
+<?php namespace App\Policies; use App\Domain\User\Models\User; use Illuminate\Auth\Access\HandlesAuthorization;
+class AgamaPolicy { use HandlesAuthorization; public function viewAny(User $user) { return $user->hasPermissionTo('kelola_master_data'); } public function create(User $user) { return $user->hasPermissionTo('kelola_master_data'); } public function update(User $user, $model) { return $user->hasPermissionTo('kelola_master_data'); } public function delete(User $user, $model) { return $user->hasRole('Super Admin'); } }

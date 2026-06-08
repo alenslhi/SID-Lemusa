@@ -2,10 +2,10 @@
 
 namespace App\Domain\Penduduk\Enums;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasLabel;
 
-enum JenisKelamin: string implements HasLabel, HasColor
+
+
+enum JenisKelamin: string
 {
     case LAKI_LAKI = 'L';
     case PEREMPUAN = 'P';

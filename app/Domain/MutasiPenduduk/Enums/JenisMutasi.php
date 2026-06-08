@@ -2,10 +2,10 @@
 
 namespace App\Domain\MutasiPenduduk\Enums;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasLabel;
 
-enum JenisMutasi: string implements HasLabel, HasColor
+
+
+enum JenisMutasi: string
 {
     case LAHIR = 'lahir';
     case MENINGGAL = 'meninggal';

@@ -1,0 +1,2 @@
+<?php namespace App\Policies; use App\Domain\User\Models\User;
+class StatusPerkawinanPolicy { public function viewAny(User $user) { return $user->hasPermissionTo('kelola_master_data'); } public function create(User $user) { return $user->hasPermissionTo('kelola_master_data'); } public function update(User $user) { return $user->hasPermissionTo('kelola_master_data'); } public function delete(User $user) { return $user->hasRole('Super Admin'); } }

@@ -2,10 +2,10 @@
 
 namespace App\Domain\Pengaduan\Enums;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasLabel;
 
-enum StatusPengaduan: string implements HasLabel, HasColor
+
+
+enum StatusPengaduan: string
 {
     case BARU = 'baru';
     case DIPROSES = 'diproses';
